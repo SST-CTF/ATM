@@ -25,3 +25,12 @@ sys.exit()
 #Deposit function here
 
 #Withdrawl function here
+def withdrawal():
+    global balance
+    money_taken = int(input('How much money do you wish to withdrawal? '))
+    if balance - money_taken >= 0:
+        balance -= money_taken
+        print("Withdrawal successful.")
+        print("Your new balance is " + str(balance) + " dollars.")
+    else:
+        print("Error: Not enough balance.")
