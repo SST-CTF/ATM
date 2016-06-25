@@ -6,9 +6,10 @@ cardNumber = input("Please enter your credit card number: ")
 pinNumber = input("Please enter your four digit pin: ")
 # TEST IF PIN MATCHES
 
+#Check Balance function here
+
 #Deposit function here
 def deposit():
-
     global balance
     deposit_value = int(input("How much do you want to deposit? "))
     balance += deposit_value
@@ -38,9 +39,6 @@ while selection < 4:
         print("Thank you, and have a nice day!")
         import sys
 sys.exit()
-
-#Check Balance function here
-
 
 
 
