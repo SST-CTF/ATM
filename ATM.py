@@ -7,6 +7,12 @@ pinNumber = input("Please enter your four digit pin: ")
 # TEST IF PIN MATCHES
 
 #Check Balance function here
+def check_balance():
+    from account.txt import balance
+    print(balance)
+
+
+check_balance()
 
 #Deposit function here
 def deposit():
