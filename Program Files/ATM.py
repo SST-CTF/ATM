@@ -18,7 +18,7 @@ def deposit(cardNumber):
     balance += deposit_value
     print("Your new balance is " + str(balance))
 
-# Withdraw function here
+# Withdraw function
 def withdrawal(cardNumber):
     balance = 50  # Make sure to get this from card numbers
     money_taken = int(input('How much money do you wish to withdrawal? '))
