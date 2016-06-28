@@ -16,21 +16,32 @@ directory = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(directory, 'bank')
 
 # Checks if given card number is within database
+# Also check if pin matches entered card number
 def checkCard(cardNumber):
     with open(filename, 'r') as f:
         next(f) # Skips first line because they are headers
         reader = csv.reader(f)
+        
         for row in reader:
             row = list(map(float, row))
             # print row
             if cardNumber == int(row[0]):
-                return 1
+                k = 1
+                pin = int(input("Please enter your four digit pin: "))
+                while k < 5:
+                    if pin == int(row[1]):
+                        return 1
+                    else:
+                        pin = int(input("Incorrect, please try again: "))
+                        k = k + 1
+                print("Access Denied!")
+                sys.exit()
             else:
                 print("This card does not exist, please try again.")
                 return 0 # Possible add create new account in the future
 
 # Check Balance function
-def check_balance(cardNumber):
+def checkBalance(cardNumber):
     from account.txt import balance
     print(balance)
 
@@ -52,16 +63,15 @@ def withdrawal(cardNumber):
         print("Error: Not enough balance.")
 
 # Program Begins (main menu and GUI)
-print ("*************************\n**********")
-print ("Welcome to the SST ATM **********\n*************************")
+print ("**********************************************")
+print ("*********** Welcome to the SST ATM ***********")
+print ("**********************************************")
 cardExists = 0
 while cardExists == 0:
-    cardNumber = input("Please enter your credit card number: ")
-    cardExists = checkCard(cardNumber)     
-pinNumber = input("Please enter your four digit pin: ")
-#
-# Test if pin matches card number
-#
+    cardNumber = input("Please enter your credit card number or '1' to exit: ")
+    if cardNumber == 1:
+        sys.exit()
+    cardExists = checkCard(cardNumber)
 
 # Selection is made here, each selection leads to a function above
 selection = 0   # Define initially to run through loop
