@@ -1,11 +1,33 @@
+# -*- coding: utf-8 -*-
 #
 # ATM.py
 # SST CTF's ATM program that will allows users to modify/view their ballances
-# © 2016 SST CTF
+# Copyright 2016 SST CTF
 #
 
 # Initial Imports
 import sys
+import csv
+import os.path
+import time
+
+#Other setup
+directory = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(directory, 'bank')
+
+# Checks if given card number is within database
+def checkCard(cardNumber):
+    with open(filename, 'r') as f:
+        next(f) # Skips first line because they are headers
+        reader = csv.reader(f)
+        for row in reader:
+            row = list(map(float, row))
+            # print row
+            if cardNumber == int(row[0]):
+                return 1
+            else:
+                print("This card does not exist, please try again.")
+                return 0 # Possible add create new account in the future
 
 # Check Balance function
 def check_balance(cardNumber):
@@ -30,12 +52,12 @@ def withdrawal(cardNumber):
         print("Error: Not enough balance.")
 
 # Program Begins (main menu and GUI)
-print ("***********************************\n**********")
-print ("Welcome to the SST ATM **********\n***********************************")
-cardNumber = input("Please enter your credit card number: ")
-#
-# Test if card number exists in textfile
-#
+print ("*************************\n**********")
+print ("Welcome to the SST ATM **********\n*************************")
+cardExists = 0
+while cardExists == 0:
+    cardNumber = input("Please enter your credit card number: ")
+    cardExists = checkCard(cardNumber)     
 pinNumber = input("Please enter your four digit pin: ")
 #
 # Test if pin matches card number

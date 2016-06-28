@@ -14,6 +14,6 @@ with open(filename, 'r') as f:
         row = list(map(float, row))
         print row # check to see if everything is working thusfar
         if 12345 == int(row[0]):
-            active = 1
+            usernameExists = 1
         else:
-            active = 1
+            usernameExists = 0
