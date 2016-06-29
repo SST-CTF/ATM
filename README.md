@@ -4,9 +4,12 @@ This is an ATM program that is currently being developed. The purpose of this pr
 # Current Features
 - Deposit
 - Withdraw
-- View Ballance
+- View Balance
+- Check card number and pin against bank databse
 
-# Current Features
+# Future Features
+- Save withdraw / deposit into database
 - Compound intrest over time
 - Open new account
 - ??? (Add any future features here)
+- SQL verison (WIP by Stan)
