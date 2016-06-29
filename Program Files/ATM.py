@@ -53,6 +53,7 @@ def checkBalance(cardNumber,userRow):
                 balance = row[2]
                 return balance
         print("ERROR 1: BALANCE READ ERROR")
+        sys.exit()
 
 
 # Deposit function
@@ -64,15 +65,17 @@ def deposit(cardNumber, userRow, balance):
 
 
 # Withdraw function
-def withdrawal(cardNumber, userRow):
-    balance = 50  # Make sure to get this from card numbers
-    money_taken = int(input("How much money do you wish to withdraw? "))
-    if balance - money_taken >= 0:
-        balance -= money_taken
+def withdrawal(cardNumber, userRow, balance):
+    withdrawalValue = float(input("How much money do you wish to withdraw? "))
+    if float(balance) - withdrawalValue >= 0:
+        balance = float(balance) - float(withdrawalValue)
         print("Withdrawal successful.")
-        print("Your new balance is " + str(balance) + " dollars.")
+        print("Your new balance is: $%s" %balance)
+        return balance
     else:
-        print("Error: Not enough balance.")
+        print("ERROR 2: Not enough money to withdraw.")
+        return float(balance)
+
 
 # Program Begins (main menu and GUI)
 print ("**********************************************")
