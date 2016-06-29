@@ -5,8 +5,10 @@ This is an ATM program that is currently being developed. The purpose of this pr
 - Deposit
 - Withdraw
 - View Ballance
+- Check card number and pin against bank databse
 
-# Current Features
+# Future Features
 - Compound intrest over time
 - Open new account
 - ??? (Add any future features here)
+- SQL verison (WIP by Stan)
