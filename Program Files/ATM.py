@@ -51,8 +51,7 @@ def checkBalance(cardNumber,userRow):
             k = k + 1
             if k == userRow:
                 balance = row[2]
-                print("Your balance is: $")
-                print(balance)
+                print("\nYour balance is: $%s\n" % balance)
                 return balance
         print("ERROR 1: BALANCE READ ERROR")
 
