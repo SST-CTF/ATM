@@ -25,13 +25,13 @@ def checkCard(cardNumber):
         for row in reader:
             row = list(map(float, row))
             userRow = userRow + 1
-            # print row
+            #print row
             if cardNumber == int(row[0]):
                 k = 1
                 pin = int(input("Please enter your four digit pin: "))
                 while k < 5:
                     if pin == int(row[1]):
-                        print(userRow)
+                        #print(userRow)
                         return userRow
                     else:
                         pin = int(input("Incorrect, please try again: "))
@@ -51,27 +51,31 @@ def checkBalance(cardNumber,userRow):
             k = k + 1
             if k == userRow:
                 balance = row[2]
-                print("\nYour balance is: $%s\n" % balance)
                 return balance
         print("ERROR 1: BALANCE READ ERROR")
+        sys.exit()
 
 
 # Deposit function
-def deposit(cardNumber, userRow):
-    deposit_value = int(input("How much do you want to deposit? "))
-    balance += deposit_value
-    print("Your new balance is " + str(balance))
+def deposit(cardNumber, userRow, balance):
+    depositValue = float(input("How much do you want to deposit? "))
+    balance = float(balance) + depositValue
+    print("Your new balance is $%s" % str(balance))
+    return balance
+
 
 # Withdraw function
-def withdrawal(cardNumber,userRow):
-    balance = 50  # Make sure to get this from card numbers
-    money_taken = int(input("How much money do you wish to withdraw? "))
-    if balance - money_taken >= 0:
-        balance -= money_taken
+def withdrawal(cardNumber, userRow, balance):
+    withdrawalValue = float(input("How much money do you wish to withdraw? "))
+    if float(balance) - withdrawalValue >= 0:
+        balance = float(balance) - float(withdrawalValue)
         print("Withdrawal successful.")
-        print("Your new balance is " + str(balance) + " dollars.")
+        print("Your new balance is: $%s" %balance)
+        return balance
     else:
-        print("Error: Not enough balance.")
+        print("ERROR 2: Not enough money to withdraw.")
+        return float(balance)
+
 
 # Program Begins (main menu and GUI)
 print ("**********************************************")
@@ -83,17 +87,18 @@ while userRow == 0:
     if cardNumber == 1:
         sys.exit()
     userRow = checkCard(cardNumber)
+balance = checkBalance(cardNumber,userRow)
 
 # Selection is made here, each selection leads to a function above
 selection = 0   # Define initially to run through loop
 while selection < 4:
-    selection = input("What would you like to do today?:\n 1. Check balance\n 2. Deposit Money\n 3. Withdraw Money\n 4. Exit\n\n")
+    selection = input("\nWhat would you like to do today?:\n 1. Check balance\n 2. Deposit Money\n 3. Withdraw Money\n 4. Exit\n\n")
     if selection is 1:  # Check Balance
-        checkBalance(cardNumber,userRow)
+        print("Your balance is: $%s" % balance)
     elif selection is 2:    # Deposit
-        deposit(cardNumber,userRow)
+        balance = deposit(cardNumber, userRow, balance)
     elif selection is 3:    #Withdraw
-        withdrawal(cardNumber,userRow)
+        balance = withdrawal(cardNumber, userRow, balance)
     elif selection is 4:    # Exit program
         print("Thank you, and have a nice day!")
 sys.exit()
