@@ -71,6 +71,21 @@ def withdrawal(cardNumber, userRow, balance):
         balance = float(balance) - float(withdrawalValue)
         print("Withdrawal successful.")
         print("Your new balance is: $%s" %balance)
+        
+        # Open a file
+        fo = open(filename, "w")
+
+        # Check current position
+        position = fo.tell();
+        print "Current file position : ", position
+
+        # Reposition pointer at the beginning once again
+        position = fo.seek(0, 0);
+        str = fo.write(10);
+        print "Again read String is : ", str
+        # Close opend file
+        fo.close()
+    
         return balance
     else:
         print("ERROR 2: Not enough money to withdraw.")
