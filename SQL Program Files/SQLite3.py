@@ -29,7 +29,6 @@ def withdraw(cardNumber):
     deposit_value = int(input("How much do you want to withdraw? "))
     c.execute("SELECT Balance FROM Account WHERE Number = ?", (cardNumber,))
     new_balance = list(c.fetchall())
-    cardNumber = cardNumber[0:5]
     print(cardNumber)
     new_balance = ''.join(str(e) for e in new_balance)
     new_balance = new_balance[1:-2]
