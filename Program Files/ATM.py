@@ -10,6 +10,7 @@ import sys
 import csv
 import os.path
 import time
+from random import randint
 
 # Other setup
 directory = os.path.dirname(os.path.abspath(__file__))
@@ -41,6 +42,12 @@ def checkCard(cardNumber):
     print("This card does not exist, please try again.")
     return 0 # Possible add create new account in the future
 
+# Create account function
+def createAccount(cardNumber, pin):
+    text = (str(cardNumber) + "," + str(pin) + ",0\n")
+    with open(filename, 'a') as appendFile:
+        appendFile.write(text)
+
 # Balance overwite function
 def replaceBalance(userRow, cardNumber, pin, balance):
     lines = open(filename, 'r').readlines()
@@ -63,7 +70,6 @@ def checkBalance(cardNumber, userRow):
                 return balance
         print("ERROR 1: BALANCE READ ERROR")
         sys.exit()
-
 
 # Deposit function
 def deposit(cardNumber, userRow, balance):
@@ -94,9 +100,14 @@ print ("*********** Welcome to the SST ATM ***********")
 print ("**********************************************")
 userRow = 0
 while userRow == 0:
-    cardNumber = input("Please enter your credit card number or '1' to exit: ")
+    cardNumber = input("Please enter your credit card number, '1' to exit, or '0' to create a new account: ")
     if cardNumber == 1:
         sys.exit()
+    elif cardNumber == 0:
+        cardNumber = input("To create an account please enter a FIVE DIGIT card number: ")
+        pin = randint(1001,9999)
+        print("Your pin is: %s" % pin)
+        createAccount(cardNumber, pin)
     userRow, pin = (checkCard(cardNumber))
 balance = checkBalance(cardNumber,userRow)
 
