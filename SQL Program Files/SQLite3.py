@@ -1,6 +1,6 @@
 import sqlite3
 import sys
-
+import os
 
 conn = sqlite3.connect('bank.db')
 c = conn.cursor()
@@ -14,27 +14,24 @@ def checkBalance(cardNumber):
     print('your balance is: ' + str(new_balance2))
 
 def deposit(cardNumber):
-    deposit_value = int(input("How much do you want to deposit? "))
+    deposit_value = float(input("How much do you want to deposit? "))
     c.execute("SELECT Balance FROM Account WHERE Number = ?", (cardNumber,))
     new_balance = list(c.fetchall())
-    cardNumber =  cardNumber [0:5]
     new_balance = ''.join(str(e) for e in new_balance)
     new_balance = new_balance[1:-2]
-    new_balance = int(new_balance[:])
+    new_balance = float(new_balance[:])
     new_balance += deposit_value
     c.execute('UPDATE Account SET Balance = ? WHERE Number = ?', (new_balance, cardNumber))
     conn.commit()
     print("Your new balance is " + str(new_balance))
 
 def withdraw(cardNumber):
-    deposit_value = int(input("How much do you want to withdraw? "))
+    deposit_value = float(input("How much do you want to withdraw? "))
     c.execute("SELECT Balance FROM Account WHERE Number = ?", (cardNumber,))
     new_balance = list(c.fetchall())
-    cardNumber = cardNumber[0:5]
-    print(cardNumber)
     new_balance = ''.join(str(e) for e in new_balance)
     new_balance = new_balance[1:-2]
-    new_balance = int(new_balance[:])
+    new_balance = float(new_balance[:])
     if new_balance > deposit_value:
         new_balance -= deposit_value
         c.execute('UPDATE Account SET Balance = ? WHERE Number = ?', (new_balance, cardNumber))
@@ -44,7 +41,6 @@ def withdraw(cardNumber):
         print("Error: Not enough balance.")
 
 def checkCard(cardNumber):
-    print(cardNumber)
     c.execute("SELECT Number, PIN FROM account WHERE Number = ?", (cardNumber,))
     row = c.fetchall()
     if row != []:
@@ -91,6 +87,6 @@ while int(selection) < 4:
         withdraw(cardNumber)
     elif int(selection) == 4:  # Exit program
         print("Thank you, and have a nice day!")
-  #  elif selection is 5:  # Change
-        #change_account(cardNumber)
+c.close()
+conn.close()
 sys.exit()
