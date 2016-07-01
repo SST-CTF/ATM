@@ -11,12 +11,12 @@ import csv
 import os.path
 import time
 
-#Other setup
+# Other setup
 directory = os.path.dirname(os.path.abspath(__file__))
 filename = os.path.join(directory, 'bank')
+pin = 0
 
-# Checks if given card number is within database
-# Also check if pin matches entered card number
+# Checks if given card number / pin is within database
 def checkCard(cardNumber):
     with open(filename, 'r') as f:
         next(f) # Skips first line because they are headers
@@ -32,7 +32,7 @@ def checkCard(cardNumber):
                 while k < 5:
                     if pin == int(row[1]):
                         #print(userRow)
-                        return userRow
+                        return (userRow, pin)
                     else:
                         pin = int(input("Incorrect, please try again: "))
                         k = k + 1
@@ -41,8 +41,17 @@ def checkCard(cardNumber):
     print("This card does not exist, please try again.")
     return 0 # Possible add create new account in the future
 
+# Balance overwite function
+def replaceBalance(userRow, cardNumber, pin, balance):
+    lines = open(filename, 'r').readlines()
+    text = (str(cardNumber) + "," + str(pin) + "," + str(balance)+ "\n")
+    lines[userRow] = text
+    out = open(filename, 'w')
+    out.writelines(lines)
+    out.close()
+
 # Check Balance function
-def checkBalance(cardNumber,userRow):
+def checkBalance(cardNumber, userRow):
     with open(filename, 'r') as f:
         next(f) # Skips first line because they are headers
         reader = csv.reader(f)
@@ -61,6 +70,7 @@ def deposit(cardNumber, userRow, balance):
     depositValue = float(input("How much do you want to deposit? "))
     balance = float(balance) + depositValue
     print("Your new balance is $%s" % str(balance))
+    replaceBalance(userRow, cardNumber, pin, balance)
     return balance
 
 
@@ -71,21 +81,7 @@ def withdrawal(cardNumber, userRow, balance):
         balance = float(balance) - float(withdrawalValue)
         print("Withdrawal successful.")
         print("Your new balance is: $%s" %balance)
-        
-        # Open a file
-        fo = open(filename, "w")
-
-        # Check current position
-        position = fo.tell();
-        print "Current file position : ", position
-
-        # Reposition pointer at the beginning once again
-        position = fo.seek(0, 0);
-        str = fo.write(10);
-        print "Again read String is : ", str
-        # Close opend file
-        fo.close()
-    
+        replaceBalance(userRow, cardNumber, pin, balance)
         return balance
     else:
         print("ERROR 2: Not enough money to withdraw.")
@@ -101,7 +97,7 @@ while userRow == 0:
     cardNumber = input("Please enter your credit card number or '1' to exit: ")
     if cardNumber == 1:
         sys.exit()
-    userRow = checkCard(cardNumber)
+    userRow, pin = (checkCard(cardNumber))
 balance = checkBalance(cardNumber,userRow)
 
 # Selection is made here, each selection leads to a function above
