@@ -108,7 +108,9 @@ while userRow == 0:
         pin = randint(1001,9999)
         print("Your pin is: %s" % pin)
         createAccount(cardNumber, pin)
-    userRow, pin = (checkCard(cardNumber))
+        userRow, pin = (checkCard(cardNumber))
+    else:
+        userRow, pin = (checkCard(cardNumber))
 balance = checkBalance(cardNumber,userRow)
 
 # Selection is made here, each selection leads to a function above
