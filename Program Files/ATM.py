@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # ATM.py
-# SST CTF's ATM program that will allows users to modify/view their ballances
+# SST CTF's ATM program that will allows users to modify / view their balances
 # Copyright 2016 SST CTF
 #
 
@@ -40,7 +40,7 @@ def checkCard(cardNumber):
                 print("Access Denied!")
                 sys.exit()
     print("This card does not exist, please try again.")
-    return 0 # Possible add create new account in the future
+    createAccount(cardNumber, )
 
 # Create account function
 def createAccount(cardNumber, pin):
@@ -93,14 +93,18 @@ def withdrawal(cardNumber, userRow, balance):
         print("ERROR 2: Not enough money to withdraw.")
         return float(balance)
 
+# Clear console when needed
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 # Program Begins (main menu and GUI)
+cls()
 print ("**********************************************")
 print ("*********** Welcome to the SST ATM ***********")
 print ("**********************************************")
 userRow = 0
 while userRow == 0:
-    cardNumber = input("Please enter your credit card number, '1' to exit, or '0' to create a new account: ")
+    cardNumber = input("Enter your credit card number, '1' to exit, or '0' to create a new account: \n")
     if cardNumber == 1:
         sys.exit()
     elif cardNumber == 0:
@@ -126,3 +130,11 @@ while selection < 4:
     elif selection is 4:    # Exit program
         print("Thank you, and have a nice day!")
 sys.exit()
+
+# <> Credits <>
+# Otakar A. - Primary Developer
+# Andrew Q. - Withdraw Function
+# Stan L.   - Deposit Function
+# Tamir E.  - Initial Check Balance Function
+#
+# EOF
