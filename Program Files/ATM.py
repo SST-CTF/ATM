@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # ATM.py
-# SST CTF's ATM program that will allows users to modify/view their ballances
+# SST CTF's ATM program that will allows users to modify / view their balances
 # Copyright 2016 SST CTF
 #
 
@@ -10,6 +10,7 @@ import sys
 import csv
 import os.path
 import time
+from random import randint
 
 # Other setup
 directory = os.path.dirname(os.path.abspath(__file__))
@@ -39,7 +40,13 @@ def checkCard(cardNumber):
                 print("Access Denied!")
                 sys.exit()
     print("This card does not exist, please try again.")
-    return 0 # Possible add create new account in the future
+    createAccount(cardNumber, )
+
+# Create account function
+def createAccount(cardNumber, pin):
+    text = (str(cardNumber) + "," + str(pin) + ",0\n")
+    with open(filename, 'a') as appendFile:
+        appendFile.write(text)
 
 # Balance overwite function
 def replaceBalance(userRow, cardNumber, pin, balance):
@@ -64,7 +71,6 @@ def checkBalance(cardNumber, userRow):
         print("ERROR 1: BALANCE READ ERROR")
         sys.exit()
 
-
 # Deposit function
 def deposit(cardNumber, userRow, balance):
     depositValue = float(input("How much do you want to deposit? "))
@@ -87,17 +93,28 @@ def withdrawal(cardNumber, userRow, balance):
         print("ERROR 2: Not enough money to withdraw.")
         return float(balance)
 
+# Clear console when needed
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 # Program Begins (main menu and GUI)
+cls()
 print ("**********************************************")
 print ("*********** Welcome to the SST ATM ***********")
 print ("**********************************************")
 userRow = 0
 while userRow == 0:
-    cardNumber = input("Please enter your credit card number or '1' to exit: ")
+    cardNumber = input("Enter your credit card number, '1' to exit, or '0' to create a new account: \n")
     if cardNumber == 1:
         sys.exit()
-    userRow, pin = (checkCard(cardNumber))
+    elif cardNumber == 0:
+        cardNumber = input("To create an account please enter a FIVE DIGIT card number: ")
+        pin = randint(1001,9999)
+        print("Your pin is: %s" % pin)
+        createAccount(cardNumber, pin)
+        userRow, pin = (checkCard(cardNumber))
+    else:
+        userRow, pin = (checkCard(cardNumber))
 balance = checkBalance(cardNumber,userRow)
 
 # Selection is made here, each selection leads to a function above
@@ -113,3 +130,11 @@ while selection < 4:
     elif selection is 4:    # Exit program
         print("Thank you, and have a nice day!")
 sys.exit()
+
+# <> Credits <>
+# Otakar A. - Primary Developer
+# Andrew Q. - Withdraw Function
+# Stan L.   - Deposit Function
+# Tamir E.  - Initial Check Balance Function
+#
+# EOF
