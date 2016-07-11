@@ -1,0 +1,66 @@
+import sys
+
+bal = 0
+
+
+def checkbal():
+    print('\n')
+    return bal
+
+
+def withdraw(amnt):
+    global bal
+    global fw
+    if amnt <= bal:
+        bal -= amnt
+        fw = open(input2 + '.txt', 'w')
+        fw.write(bal)
+        print(bal)
+        return bal
+    else:
+        print('You can\'t do that!')
+
+
+def deposit(amnt):
+    global bal
+    bal += amnt
+    print(bal)
+    return bal
+
+
+signed_in = 0
+
+while signed_in is 0:
+    input0 = input('\nCreate an acount (1)\nor\nSign in (2)\n')
+    if input0 is '1':
+        input2 = input('\nPlease enter your id\n')
+        file = open(input2 + '.txt', 'w')
+        fw = open('id', 'a')
+        fw.write(input2 + '\n')
+        fw.close()
+        print('\nRestarting\n')
+        sys.exit()
+    elif input0 is '2':
+        input4 = input('\nPlease sign in\n')
+        if input4 in open('id').read():
+            signed_in = 1
+        else:
+            print('\nSorry, please try again\n')
+    else:
+        print('\nInvalid input\n')
+
+while signed_in is 1:
+    user_input = input('\n - Options - \n1 to check your balance\n2 to withdraw\n3 to deposit\n4 to exit\n')
+    if user_input is '1':
+        print(checkbal())
+    elif user_input is '2':
+        user_input2 = int(input('\nHow much would you like to withdraw?\n'))
+        bal -= withdraw(user_input2)
+    elif user_input is '3':
+        user_input3 = int(input('\nHow much would you like to deposit?\n'))
+        bal += deposit(user_input3)
+    elif user_input is '4':
+        signed_in = 0
+        sys.exit()
+    else:
+        print('\nInvalid input\n')
