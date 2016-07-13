@@ -68,7 +68,6 @@ def create_account(name):
             print("That username has been taken. Please pick a different username.")
     else:
         acc_name = name
-        print(acc_name)
 
     salt_card_num = binascii.b2a_hex(os.urandom(12))
     salt_pin = binascii.b2a_hex(os.urandom(12))
@@ -102,7 +101,7 @@ def save_exit():
 
 
 def user_check(name):
-    if name in open("accountsecurity.txt").read():
+    if name not in open("accountinfo.txt").read():
         return True
     
 def main():
@@ -126,10 +125,10 @@ def main():
                 sys.exit()
             else:
                 print("Invalid choice\n")
-    elif choice == '2':
+    elif choice is '2':
         name = input("Please enter a username\n")
         create_account(name)
-    elif choice == '3':
+    elif choice is '3':
         print("Thank you - Please have a nice day\n")
         sys.exit()
     else:
