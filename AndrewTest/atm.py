@@ -25,15 +25,19 @@ def sha256hash(card, pin, salt_for_card, salt_for_pin):
 
 # Authorization Search
 def search_account_security(auth_search):
-    with open("accountsecurity.txt", "r") as accountsecurity:
-        for line in accountsecurity:
-            if auth_search in line:
-                security = line
-                auth_bool = True
-                return security, auth_bool
-        accountsecurity.close()
-        # Error
-        print("Error 2: Card number and pin number not found for user. Please try again.")
+    if os.path.isfile("accountsecurity.txt"):
+        with open("accountsecurity.txt", "r") as accountsecurity:
+            for line in accountsecurity:
+                if auth_search in line:
+                    security = line
+                    auth_bool = True
+                    return security, auth_bool
+            accountsecurity.close()
+            # Error
+            print("Error 2: Card number and pin number not found for user. Please try again.")
+            sys.exit()
+    else:
+        print("Error 8: Accountsecurity.txt not found. Please create an account.")
         sys.exit()
 
 # Authorization Function
@@ -44,8 +48,12 @@ def auth():
     # Getting account name
     name = input("What account name do you wish to access?\n> ")
 
-    if user_check(name) is True:
-        print("Error 6: Account not recognized. Please try again.\n")
+    if os.path.isfile("accountinfo.txt"):
+        if user_check(name) is True:
+            print("Error 6: Account not recognized. Please try again.\n")
+            sys.exit()
+    else:
+        print("Error 7: Accountinfo.txt not found. Please create an account")
         sys.exit()
 
     # Checking if name is in account info
