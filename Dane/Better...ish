@@ -1,0 +1,80 @@
+import sys
+
+nusername = ''
+susername = ''
+
+
+signed_in = 0
+
+while signed_in is 0:
+    nors = input('\nCreate an account (1)\nor\nSign in (2)\n')
+    if nors is '1':
+        nusername = input('\nPlease enter your id\n')
+        file = open(str(nusername) + '.txt', 'w')
+        fw = open('id', 'a')
+        fw.write(nusername + '\n')
+        fw.close()
+        print('\nRestarting\n')
+        sys.exit()
+    elif nors is '2':
+        susername = input('\nPlease sign in\n')
+        if susername in open('id').read():
+            signed_in = 1
+            if '0'or'1'or'2'or'3'or'4'or'5'or'6'or'7'or'8'or'9' in open(susername + '.txt').read():
+                suserbal = open(susername + '.txt').read()
+            else:
+                nullf = open(susername + ',txt', 'w')
+                nullf.write('0')
+                nullf.close()
+                suserbal = 0
+        else:
+            print('\nSorry, please try again\n')
+    else:
+        print('\nInvalid input\n')
+
+
+def checkbal():
+    chkf = open(str(susername) + '.txt', 'r')
+    print(chkf.read())
+    chkf.close()
+
+
+def withdraw(amnt):
+    witf = open(str(susername) + '.txt', 'r')
+    witbal = int(witf.read())
+    witf.close()
+    if witbal >= amnt:
+        witbal -= amnt
+        wihf = open(str(susername) + '.txt', 'w')
+        wihf.write(str(witbal))
+        wihf.close()
+        print(witbal)
+    else:
+        print('HAHAHAHA you don\'t have that much money! Get a job, you useless swine!')
+
+def deposit(amnt):
+    depf = open(str(susername) + '.txt', 'r')
+    depbal = int(depf.read())
+    depf.close()
+    depbal += amnt
+    print(depbal)
+    depf = open(str(susername) + '.txt', 'w')
+    depf.write(str(depbal))
+    depf.close
+    return depbal
+
+
+while signed_in is 1:
+    opt = input('\n - Options - \n1 to check your balance\n2 to withdraw\n3 to deposit\n4 to exit\n')
+    if opt is '1':
+        checkbal()
+    elif opt is '2':
+        wquant = int(input('\nHow much would you like to withdraw?\n'))
+        withdraw(wquant)
+    elif opt is '3':
+        dquant = int(input('\nHow much would you like to deposit?\n'))
+        deposit(dquant)
+    elif opt is '4':
+        signed_in = 0
+    else:
+        print('\nInvalid input\n')
