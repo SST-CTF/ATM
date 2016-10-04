@@ -9,5 +9,5 @@ This is an ATM program that is currently being developed. The purpose of this pr
 - [x] Save withdraw / deposit into database
 - [ ] Compound intrest over time
 - [x] Open new account
-- [x] Encryption (TYPE: __)
-- [ ] (Add any other features here)
+- [x] Encryption TYPE: __
+- [ ] Add any other features here
