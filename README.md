@@ -19,6 +19,6 @@ This is an ATM program that is currently being developed. The purpose of this pr
 - [x] Check card number and pin against bank database
 - [x] Save withdraw / deposit into database
 - [ ] Compound intrest over time
-- [ ] Open new account
-- [ ] Encryption
+- [x] Open new account
+- [x] Encryption
 - [ ] ??? (Add any future features here)
