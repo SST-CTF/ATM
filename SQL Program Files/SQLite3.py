@@ -24,8 +24,8 @@ def createAccount():
 def checkBalance(cardNumber):
     c.execute("SELECT balance FROM account WHERE Number = ?", (cardNumber,))
     new_balance = c.fetchall()
-    new_balance1 = new_balance[0] #Turning array into tuple
-    new_balance2 = new_balance1[0] #turnig tuple into number
+    new_balance1 = new_balance[0]
+    new_balance2 = new_balance1[0] 
     print('your balance is: ' + str(new_balance2))
 
 def deposit(cardNumber):
@@ -113,8 +113,7 @@ while cardExists == 0:
 # Selection is made here, each selection leads to a function above
 selection = 0  # Define initially to run through loop
 while int(selection) < 5:
-    selection = input(
-        "What would you like to do today?:\n 1. Check balance\n 2. Deposit Money\n 3. Withdraw Money\n 4. Change PIN number\n 5. Exit\n")
+    selection = input("What would you like to do today?:\n 1. Check balance\n 2. Deposit Money\n 3. Withdraw Money\n 4. Change PIN number\n 5. Exit\n")
     if int(selection) == 1:  # Check Balance
         checkBalance(cardNumber)
     elif int(selection) == 2:  # Deposit
